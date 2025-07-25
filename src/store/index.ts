@@ -1,14 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import auth from './slices/auth';
 import ui from './slices/ui';
-import dashboard from './slices/dashboard';
 import websocketMiddleware from './middleware/websocket';
 
 const store = configureStore({
   reducer: {
     auth,
     ui,
-    dashboard,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(websocketMiddleware),

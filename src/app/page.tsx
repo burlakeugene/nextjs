@@ -2,13 +2,8 @@
 
 import React from 'react';
 import * as S from './style';
-import Auth from './components/Auth';
 
-const Home = React.memo(() => (
-  <S.Wrapper>
-    <Auth />
-  </S.Wrapper>
-));
+const Home = React.memo(() => <S.Wrapper>index</S.Wrapper>);
 
 Home.displayName = 'Home';
 

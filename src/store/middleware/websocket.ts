@@ -39,19 +39,9 @@ const connect = (user: TProfile, store: any) => {
     console.error('Socket.io connection error', error);
   });
 
-  socket.on(
-    'website-state',
-    (data: {
-      id: string;
-      stageCode: string;
-      analysisGenerationStatus: string;
-    }) => {
-      console.log('Website state update:', data);
-      // Здесь можно диспатчить действия в store при получении обновлений
-      // Например:
-      // store.dispatch(updateWebsiteState(data));
-    }
-  );
+  socket.on('message', (data) => {
+    console.log('Website state update:', data);
+  });
 };
 
 const disconnect = () => {
