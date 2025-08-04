@@ -17,6 +17,7 @@ const Tabs = React.memo<TProps>(
   ({ className, list = [], active: activeProps = 0, onChange }) => {
     const [active, setActive] = React.useState(activeProps);
     const itemsRef = React.useRef<Array<HTMLButtonElement | null>>([]);
+    const wrapperRef = React.useRef(null);
     const forceUpdate = useForceUpdate();
 
     React.useEffect(() => {
@@ -46,19 +47,21 @@ const Tabs = React.memo<TProps>(
     }, [list.length]);
 
     React.useEffect(() => {
-      forceUpdate();
+      if (!wrapperRef.current) return;
 
-      const func = () => {
+      const observer = new ResizeObserver(() => {
         forceUpdate();
+      });
+
+      observer.observe(wrapperRef.current);
+
+      return () => {
+        observer.disconnect();
       };
-
-      window.addEventListener('resize', func);
-
-      return () => window.removeEventListener('resize', func);
     }, [list]);
 
     return (
-      <S.Wrapper className={className}>
+      <S.Wrapper ref={wrapperRef} className={className}>
         <S.List>
           <S.Active
             style={{
